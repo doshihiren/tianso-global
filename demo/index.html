@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tiaanso Global — Design · Stock · Order</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #efe6d6;
+      --bg-2: #e7dcc8;
+      --card: #fffdf8;
+      --ink: #1c1712;
+      --muted: #6d6458;
+      --line: #e6d9c6;
+      --accent: #9a3324;
+      --accent-dark: #7a2418;
+      --forest: #2f4a40;
+      --gold: #c4a46a;
+      --ok: #2f6b4f;
+      --warn: #9a6b12;
+      --shadow: 0 18px 50px rgba(40, 28, 16, 0.12);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 480px at 10% -10%, #f7efe2 0%, transparent 55%),
+        radial-gradient(700px 420px at 110% 0%, #ead9b8 0%, transparent 50%),
+        var(--bg);
+    }
+    button, input, select, textarea { font-family: inherit; }
+    button { cursor: pointer; }
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 18px 108px;
+    }
+    header.top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .mark {
+      width: 44px; height: 44px; border-radius: 14px;
+      background: linear-gradient(145deg, #2f4a40, #1c1712);
+      color: #f4e6c4;
+      display: grid; place-items: center;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 700; font-size: 22px;
+      box-shadow: var(--shadow);
+    }
+    .brand h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px; font-weight: 600; letter-spacing: 0.01em;
+    }
+    .brand p { margin: 0; color: var(--muted); font-size: 13px; }
+    .role-switch {
+      display: flex; background: var(--card); border: 1px solid var(--line);
+      border-radius: 999px; padding: 4px; gap: 2px;
+    }
+    .role-switch button {
+      border: 0; background: transparent; color: var(--muted);
+      padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: 13px;
+    }
+    .role-switch button.on { background: var(--ink); color: #fffdf8; }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    h2.display {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 34px; font-weight: 600; margin: 0 0 8px;
+    }
+    .lede { color: var(--muted); margin: 0 0 22px; line-height: 1.5; max-width: 62ch; }
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .flow-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fffdf8, #f6efe3);
+      border: 1px solid var(--line);
+      min-height: 210px;
+    }
+    .flow-card .n {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent); color: #fff; display: grid; place-items: center;
+      font-size: 12px; font-weight: 700; margin-bottom: 12px;
+    }
+    .flow-card h3 { margin: 0 0 8px; font-size: 16px; }
+    .flow-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .compare {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px;
+    }
+    .compare article { padding: 16px 18px; }
+    .compare h3 { margin: 0 0 10px; font-size: 15px; }
+    .compare ul { margin: 0; padding-left: 18px; color: var(--muted); line-height: 1.55; font-size: 14px; }
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .btn {
+      border: 0; border-radius: 12px; padding: 12px 16px; font-weight: 600; font-size: 14px;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-dark { background: var(--ink); color: #fffdf8; }
+    .btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+    .btn-ok { background: var(--forest); color: #fff; }
+    .btn-wa { background: #128c7e; color: #fff; }
+    .toolbar {
+      display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .search {
+      flex: 1; min-width: 220px;
+      border: 1px solid var(--line); background: #fff; border-radius: 12px;
+      padding: 11px 14px; font-size: 15px;
+    }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      border: 1px solid var(--line); background: #fff; border-radius: 999px;
+      padding: 7px 12px; font-size: 13px; font-weight: 600; color: var(--muted);
+    }
+    .chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+      cursor: pointer; transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .swatch { height: 158px; position: relative; }
+    .card-body { padding: 12px 13px 14px; }
+    .code { font-size: 11px; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+    .card h3 { margin: 2px 0 8px; font-size: 16px; }
+    .meta { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); }
+    .stock-pill {
+      position: absolute; left: 10px; bottom: 10px;
+      background: rgba(255,253,248,.92); border-radius: 999px;
+      padding: 4px 8px; font-size: 11px; font-weight: 700; color: var(--forest);
+    }
+    .bottom-nav {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      bottom: 14px; width: min(1180px, calc(100% - 24px));
+      background: rgba(28,23,18,.94); color: #fff;
+      border-radius: 18px; display: grid; grid-template-columns: repeat(4, 1fr);
+      padding: 8px; z-index: 20; backdrop-filter: blur(10px);
+    }
+    .bottom-nav button {
+      background: transparent; border: 0; color: #d8cbb8;
+      padding: 10px 6px; border-radius: 12px; font-weight: 600; font-size: 13px;
+    }
+    .bottom-nav button.on { background: #fffdf8; color: var(--ink); }
+    .sheet-back {
+      position: fixed; inset: 0; background: rgba(28,23,18,.45);
+      z-index: 30; display: none; align-items: flex-end; justify-content: center;
+      padding: 16px;
+    }
+    .sheet-back.show { display: flex; }
+    .sheet {
+      width: min(920px, 100%);
+      max-height: min(92vh, 860px);
+      overflow: auto;
+      background: var(--card);
+      border-radius: 22px 22px 18px 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .sheet-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .gallery { display: grid; grid-template-columns: 1.4fr .8fr .8fr; grid-template-rows: 150px 150px; gap: 8px; margin: 14px 0; }
+    .gallery .swatch:first-child { grid-row: 1 / span 2; height: auto; border-radius: 14px; }
+    .gallery .swatch { border-radius: 12px; height: 150px; }
+    .matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .matrix th, .matrix td { border-bottom: 1px solid var(--line); padding: 8px; text-align: center; }
+    .matrix th:first-child, .matrix td:first-child { text-align: left; }
+    .matrix button.qty {
+      border: 1px solid var(--line); background: #fff; border-radius: 8px;
+      min-width: 42px; padding: 6px 0; font-weight: 700;
+    }
+    .wa {
+      background: #0b141a; color: #e9edef; border-radius: 16px; padding: 14px;
+      font-size: 14px; line-height: 1.5; white-space: pre-wrap;
+    }
+    .photos-pick { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+    .photos-pick .swatch {
+      width: 72px; height: 72px; border-radius: 10px; position: relative;
+      outline: 2px solid transparent; cursor: pointer;
+    }
+    .photos-pick .swatch.sel { outline-color: var(--accent); }
+    .order-lines { display: grid; gap: 8px; margin: 12px 0; }
+    .line {
+      display: grid; grid-template-columns: 1.3fr .8fr .6fr .5fr auto;
+      gap: 8px; align-items: center;
+    }
+    .line input, .line select, .field {
+      border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; background: #fff;
+    }
+    .orders { display: grid; gap: 10px; }
+    .order {
+      display: grid; grid-template-columns: 1fr auto; gap: 8px;
+      padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: #fff;
+    }
+    .tag {
+      display: inline-block; border-radius: 999px; padding: 3px 8px;
+      font-size: 11px; font-weight: 700; background: #e8f3ec; color: var(--ok);
+    }
+    .tag.warn { background: #f7ecd4; color: var(--warn); }
+    .capture-stage { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
+    .viewfinder {
+      aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; position: relative;
+      background: #111;
+    }
+    .shutter {
+      position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+      width: 64px; height: 64px; border-radius: 50%; border: 4px solid #fff; background: #f2f2f2;
+    }
+    .toast {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 999px;
+      z-index: 50; display: none; font-size: 14px; font-weight: 600;
+    }
+    .hidden { display: none !important; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: middle; }
+    @media (max-width: 860px) {
+      .flow-grid, .compare, .capture-stage, .line { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 160px 110px 110px; }
+      .gallery .swatch:first-child { grid-row: auto; height: 160px; }
+      .brand h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <div class="mark">T</div>
+        <div>
+          <h1>Tiaanso Global</h1>
+          <p>Design cards bind photos, live stock and orders</p>
+        </div>
+      </div>
+      <div class="role-switch" id="roles">
+        <button data-role="sales" class="on">Sales</button>
+        <button data-role="studio">Studio tablet</button>
+        <button data-role="warehouse">Warehouse</button>
+      </div>
+    </header>
+
+    <section id="view-flow" class="panel" style="padding:22px">
+      <h2 class="display">Solution flow — before the working demo</h2>
+      <p class="lede">Today photos sit in tablet folders, stock sits somewhere else, and orders happen on WhatsApp. The customer asks for a design and availability; the salesperson hunts folders, then types stock by hand. The Design Card replaces that. One record holds the gallery, the stock matrix, the share pack, and the order line.</p>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div class="n">1</div>
+          <h3>Capture into a design</h3>
+          <p>Studio shoots on the tablet straight into TG-2148 — not into a folder named “floral”. Each photo is tagged with view and colorway.</p>
+        </article>
+        <article class="flow-card">
+          <div class="n">2</div>
+          <h3>Stock rides with the card</h3>
+          <p>Warehouse keeps a color × size matrix on the same design. Sales never retypes “we have 426 pcs”.</p>
+        </article>
+        <article class="flow-card">
+          <div class="n">3</div>
+          <h3>Customer asks → share pack</h3>
+          <p>Search the design, pick photos, send WhatsApp with images + live stock + rate in one tap.</p>
+        </article>
+        <article class="flow-card">
+          <div class="n">4</div>
+          <h3>Take the order here</h3>
+          <p>Same screen: customer, color, size, qty. Stock is checked and reserved. Order number goes back to the customer.</p>
+        </article>
+      </div>
+      <div class="compare">
+        <article class="panel" style="box-shadow:none">
+          <h3>Folder on the tablet</h3>
+          <ul>
+            <li>Photos have no design code</li>
+            <li>Stock is a second conversation</li>
+            <li>Order is a third chat / paper slip</li>
+            <li>New staff cannot find “that floral”</li>
+          </ul>
+        </article>
+        <article class="panel" style="box-shadow:none">
+          <h3>Design Card</h3>
+          <ul>
+            <li>Every photo belongs to a SKU</li>
+            <li>Availability travels with the image</li>
+            <li>Order is a button on the same card</li>
+            <li>Search by code, name, fabric, color</li>
+          </ul>
+        </article>
+      </div>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="showView('catalog')">Open catalog demo</button>
+        <button class="btn btn-ghost" onclick="showView('capture')">See tablet capture</button>
+      </div>
+    </section>
+
+    <section id="view-catalog" class="hidden">
+      <div class="toolbar">
+        <input class="search" id="q" placeholder="Search design code, name, fabric, color…" oninput="renderCatalog()" />
+        <div class="chips" id="cats"></div>
+      </div>
+      <div class="grid" id="catalog"></div>
+    </section>
+
+    <section id="view-capture" class="hidden">
+      <div class="capture-stage">
+        <div class="panel" style="padding:14px">
+          <div class="toolbar">
+            <select class="field" id="captureDesign" onchange="syncViewfinder()"></select>
+            <select class="field" id="captureColor"></select>
+            <select class="field" id="captureView">
+              <option>Front</option><option>Drape</option><option>Detail</option><option>Back</option>
+            </select>
+          </div>
+          <div class="viewfinder" id="viewfinder">
+            <button class="shutter" title="Capture" onclick="captureShot()"></button>
+          </div>
+          <p class="lede" style="margin:12px 0 0">Tap the shutter to attach a studio shot to the selected design. On a real tablet this uses the camera; in the demo it stamps a labelled still onto the Design Card. You can also upload a photo.</p>
+          <label class="btn btn-ghost" style="display:inline-block;margin-top:8px">
+            Upload / tablet camera
+            <input id="fileCap" type="file" accept="image/*" capture="environment" hidden onchange="captureFile(event)" />
+          </label>
+        </div>
+        <div class="panel" style="padding:16px">
+          <h3 style="margin:0 0 8px">Shots on this design</h3>
+          <p class="lede" id="capHint"></p>
+          <div class="photos-pick" id="capShots"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-orders" class="hidden">
+      <div class="toolbar">
+        <h2 class="display" style="font-size:28px;margin:0;flex:1">Orders</h2>
+        <button class="btn btn-primary" onclick="openNewOrder()">New order</button>
+      </div>
+      <div class="orders" id="orders"></div>
+    </section>
+  </div>
+
+  <nav class="bottom-nav">
+    <button data-view="flow" class="on" onclick="showView('flow')">Flow</button>
+    <button data-view="capture" onclick="showView('capture')">Capture</button>
+    <button data-view="catalog" onclick="showView('catalog')">Catalog</button>
+    <button data-view="orders" onclick="showView('orders')">Orders</button>
+  </nav>
+
+  <div class="sheet-back" id="detailBack" onclick="if(event.target===this) closeSheets()">
+    <div class="sheet" id="detailSheet"></div>
+  </div>
+  <div class="sheet-back" id="shareBack" onclick="if(event.target===this) closeSheets()">
+    <div class="sheet" id="shareSheet"></div>
+  </div>
+  <div class="sheet-back" id="orderBack" onclick="if(event.target===this) closeSheets()">
+    <div class="sheet" id="orderSheet"></div>
+  </div>
+
+  <script>
+    const SIZES = ["S", "M", "L", "XL"];
+    const customers = [
+      { id: "c1", name: "Meera Textiles", city: "Surat", phone: "919876543210" },
+      { id: "c2", name: "Kala Niketan", city: "Mumbai", phone: "919812345678" },
+      { id: "c3", name: "Orient Apparel", city: "Delhi", phone: "919611223344" }
+    ];
+    const designs = [
+      d("TG-2148", "Floral Voile", "Printed", "Cotton Voile", 385, [
+        c("Sage", "#8BA888", [40,70,60,40]),
+        c("Ivory", "#E8D9C0", [20,50,40,20]),
+        c("Indigo", "#2C3A6B", [18,36,24,8])
+      ], "floral"),
+      d("TG-3301", "Linen Stripe", "Woven", "European Linen", 620, [
+        c("Sand", "#C8B48A", [12,24,18,10]),
+        c("Olive", "#6B7348", [8,16,14,6])
+      ], "stripe"),
+      d("TG-4412", "Block Print", "Printed", "Cambric", 275, [
+        c("Madar", "#9A3324", [30,48,36,20]),
+        c("Mustard", "#D4A017", [22,28,18,12])
+      ], "block"),
+      d("TG-1180", "Ikat Weave", "Woven", "Handloom Cotton", 540, [
+        c("Wine", "#6A1D2F", [6,14,10,4]),
+        c("Teal", "#1F5A56", [10,18,12,6])
+      ], "ikat"),
+      d("TG-5520", "Satin Solid", "Solid", "Viscose Satin", 310, [
+        c("Blush", "#E3B7A6", [50,80,70,40]),
+        c("Noir", "#1C1712", [20,30,28,16])
+      ], "solid"),
+      d("TG-6077", "Chanderi Butti", "Woven", "Silk Cotton", 890, [
+        c("Gold", "#C4A46A", [4,10,8,2]),
+        c("Ivory", "#F3E6CC", [6,12,8,4])
+      ], "butti")
+    ];
+    let role = "sales";
+    let view = "flow";
+    let cat = "All";
+    let shareSel = [];
+    let draft = null;
+    let orders = JSON.parse(localStorage.getItem("tg-orders") || "[]");
+
+    function c(name, hex, qty) {
+      const stock = {};
+      SIZES.forEach((s, i) => stock[s] = qty[i]);
+      return { name, hex, stock };
+    }
+    function d(id, name, category, fabric, rate, colors, motif) {
+      const images = ["Front", "Drape", "Detail", "Back"].map((viewName, i) => ({
+        id: id + "-" + i,
+        view: viewName,
+        color: colors[0].name,
+        motif,
+        palette: colors.map(x => x.hex)
+      }));
+      return { id, name, category, fabric, rate, unit: "pc", moq: 12, colors, images, motif };
+    }
+    function totalStock(design) {
+      return design.colors.reduce((n, col) => n + SIZES.reduce((m, s) => m + (col.stock[s] || 0), 0), 0);
+    }
+    function swatchStyle(item, large) {
+      const p = item.palette || ["#8BA888", "#E8D9C0", "#2C3A6B"];
+      const kind = item.motif || "floral";
+      const layers = {
+        floral: `radial-gradient(circle at 20% 30%, ${p[0]} 0 8%, transparent 9%), radial-gradient(circle at 70% 60%, ${p[2]||p[0]} 0 6%, transparent 7%), repeating-linear-gradient(45deg, ${p[1]} 0 12px, ${p[0]}33 12px 24px)`,
+        stripe: `repeating-linear-gradient(90deg, ${p[0]} 0 14px, ${p[1]} 14px 28px)`,
+        block: `repeating-linear-gradient(0deg, ${p[0]} 0 18px, ${p[1]} 18px 22px), repeating-linear-gradient(90deg, transparent 0 18px, ${p[1]}55 18px 22px)`,
+        ikat: `repeating-linear-gradient(115deg, ${p[0]} 0 10px, ${p[1]} 16px 22px, ${p[0]} 28px 36px)`,
+        solid: `linear-gradient(160deg, ${p[0]}, ${p[1]||p[0]})`,
+        butti: `radial-gradient(circle at 25% 25%, ${p[0]} 0 5px, transparent 6px), radial-gradient(circle at 75% 65%, ${p[0]} 0 5px, transparent 6px), linear-gradient(${p[1]}, ${p[1]})`
+      };
+      return `background:${layers[kind]||layers.floral};background-size:${large?"auto":"cover"}`;
+    }
+
+    function showView(name) {
+      view = name;
+      ["flow","catalog","capture","orders"].forEach(v => {
+        document.getElementById("view-" + v).classList.toggle("hidden", v !== name);
+      });
+      document.querySelectorAll(".bottom-nav button").forEach(b => b.classList.toggle("on", b.dataset.view === name));
+      if (name === "catalog") renderCatalog();
+      if (name === "capture") renderCapture();
+      if (name === "orders") renderOrders();
+    }
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg; el.style.display = "block";
+      setTimeout(() => el.style.display = "none", 2200);
+    }
+    function closeSheets() {
+      ["detailBack","shareBack","orderBack"].forEach(id => document.getElementById(id).classList.remove("show"));
+    }
+
+    document.getElementById("roles").addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      role = b.dataset.role;
+      document.querySelectorAll("#roles button").forEach(x => x.classList.toggle("on", x === b));
+      if (role === "studio") showView("capture");
+      if (role === "sales") showView("catalog");
+      if (role === "warehouse") { showView("catalog"); toast("Warehouse: tap a design, then edit the stock matrix"); }
+    });
+
+    function renderCatalog() {
+      const q = (document.getElementById("q").value || "").toLowerCase();
+      const cats = ["All", ...new Set(designs.map(d => d.category))];
+      document.getElementById("cats").innerHTML = cats.map(c =>
+        `<button class="chip ${c===cat?"on":""}" onclick="cat='${c}';renderCatalog()">${c}</button>`
+      ).join("");
+      const list = designs.filter(d => {
+        const blob = [d.id, d.name, d.fabric, d.category, ...d.colors.map(c => c.name)].join(" ").toLowerCase();
+        return (cat === "All" || d.category === cat) && blob.includes(q);
+      });
+      document.getElementById("catalog").innerHTML = list.map(d => `
+        <article class="card" onclick="openDesign('${d.id}')">
+          <div class="swatch" style="${swatchStyle({motif:d.motif, palette:d.colors.map(c=>c.hex)})}">
+            <span class="stock-pill">${totalStock(d)} ${d.unit} ready</span>
+          </div>
+          <div class="card-body">
+            <div class="code">${d.id}</div>
+            <h3>${d.name}</h3>
+            <div class="meta"><span>${d.fabric}</span><span>₹${d.rate}/${d.unit}</span></div>
+          </div>
+        </article>`).join("");
+    }
+
+    function openDesign(id) {
+      const d = designs.find(x => x.id === id);
+      const canEdit = role === "warehouse";
+      document.getElementById("detailSheet").innerHTML = `
+        <div class="sheet-head">
+          <div>
+            <div class="code">${d.id} · ${d.category}</div>
+            <h2 class="display" style="font-size:30px">${d.name}</h2>
+            <p class="lede" style="margin-bottom:0">${d.fabric} · ₹${d.rate}/${d.unit} · MOQ ${d.moq}</p>
+          </div>
+          <button class="btn btn-ghost" onclick="closeSheets()">Close</button>
+        </div>
+        <div class="gallery">
+          ${d.images.map(img => `<div class="swatch" title="${img.view} · ${img.color}" style="${img.src ? `background:url('${img.src}') center/cover` : swatchStyle(img)}"></div>`).join("")}
+        </div>
+        <h3>Live stock</h3>
+        <table class="matrix">
+          <thead><tr><th>Color</th>${SIZES.map(s=>`<th>${s}</th>`).join("")}<th>Total</th></tr></thead>
+          <tbody>
+            ${d.colors.map((col, ci) => `<tr>
+              <td><span class="dot" style="background:${col.hex}"></span>${col.name}</td>
+              ${SIZES.map(s => `<td>${canEdit
+                ? `<button class="qty" onclick="bump('${d.id}',${ci},'${s}',-1)">−</button> ${col.stock[s]} <button class="qty" onclick="bump('${d.id}',${ci},'${s}',1)">+</button>`
+                : col.stock[s]}</td>`).join("")}
+              <td><b>${SIZES.reduce((n,s)=>n+col.stock[s],0)}</b></td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+        <p class="lede" style="margin:10px 0 0">Ready now: <b>${totalStock(d)} ${d.unit}</b>${canEdit ? " — warehouse can tap + / −" : ""}</p>
+        <div class="cta-row">
+          <button class="btn btn-wa" onclick="openShare('${d.id}')">Share design + stock</button>
+          <button class="btn btn-primary" onclick="openNewOrder('${d.id}')">Add to order</button>
+          <button class="btn btn-ghost" onclick="showView('capture'); closeSheets(); document.getElementById('captureDesign').value='${d.id}'; renderCapture();">Capture more photos</button>
+        </div>`;
+      document.getElementById("detailBack").classList.add("show");
+    }
+    function bump(id, ci, size, delta) {
+      const d = designs.find(x => x.id === id);
+      d.colors[ci].stock[size] = Math.max(0, d.colors[ci].stock[size] + delta);
+      openDesign(id);
+      renderCatalog();
+    }
+
+    function openShare(id) {
+      const d = designs.find(x => x.id === id);
+      shareSel = d.images.map(i => i.id);
+      renderShare(d);
+      document.getElementById("shareBack").classList.add("show");
+    }
+    function togglePhoto(id, imgId) {
+      shareSel = shareSel.includes(imgId) ? shareSel.filter(x => x !== imgId) : shareSel.concat(imgId);
+      renderShare(designs.find(x => x.id === id));
+    }
+    function shareText(d) {
+      const lines = d.colors.map(c => `${c.name}  ${SIZES.reduce((n,s)=>n+c.stock[s],0)} pcs`).join("   ");
+      return `Tiaanso Global
+Design ${d.id}  ·  ${d.name}  ·  ${d.fabric}
+
+${lines}
+Ready now: ${totalStock(d)} pcs    Rate: ₹${d.rate}/${d.unit}    MOQ: ${d.moq}
+
+Reply with color + size + qty to confirm.`;
+    }
+    let lastShareText = "";
+    function renderShare(d) {
+      const cust = customers[0];
+      const text = shareText(d);
+      lastShareText = text;
+      document.getElementById("shareSheet").innerHTML = {
+        <div class="sheet-head">
+          <div>
+            <h2 class="display" style="font-size:28px">Share pack</h2>
+            <p class="lede">Customer receives selected photos plus live stock — not a folder dump.</p>
+          </div>
+          <button class="btn btn-ghost" onclick="closeSheets()">Close</button>
+        </div>
+        <div class="photos-pick">
+          ${d.images.map(img => `<div class="swatch ${shareSel.includes(img.id)?"sel":""}" onclick="togglePhoto('${d.id}','${img.id}')" style="${img.src ? `background:url('${img.src}') center/cover` : swatchStyle(img)}" title="${img.view}"></div>`).join("")}
+        </div>
+        <div class="wa">${text.replaceAll("<","&lt;")}</div>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="https://wa.me/${cust.phone}?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">WhatsApp to ${cust.name}</a>
+          <button class="btn btn-dark" onclick="copyShare()">Copy message</button>
+          <button class="btn btn-primary" onclick="closeSheets(); openNewOrder('${d.id}')">Customer wants it → order</button>
+        </div>`;
+    }
+    async function copyShare() {
+      try { await navigator.clipboard.writeText(lastShareText); toast("Share text copied"); }
+      catch { toast("Copy from the preview"); }
+    }
+
+    function openNewOrder(designId) {
+      draft = {
+        customerId: customers[0].id,
+        lines: [{ designId: designId || designs[0].id, color: "", size: "M", qty: 12 }]
+      };
+      const d0 = designs.find(x => x.id === draft.lines[0].designId);
+      draft.lines[0].color = d0.colors[0].name;
+      renderOrder();
+      document.getElementById("orderBack").classList.add("show");
+    }
+    function available(designId, color, size) {
+      const d = designs.find(x => x.id === designId);
+      const col = d.colors.find(c => c.name === color);
+      return col ? col.stock[size] : 0;
+    }
+    function renderOrder() {
+      const cust = customers.find(c => c.id === draft.customerId);
+      const rows = draft.lines.map((ln, i) => {
+        const d = designs.find(x => x.id === ln.designId);
+        const av = available(ln.designId, ln.color, ln.size);
+        const over = ln.qty > av;
+        return `<div class="line">
+          <select class="field" onchange="draft.lines[${i}].designId=this.value; draft.lines[${i}].color=designs.find(x=>x.id===this.value).colors[0].name; renderOrder()">
+            ${designs.map(x => `<option value="${x.id}" ${x.id===ln.designId?"selected":""}>${x.id} ${x.name}</option>`).join("")}
+          </select>
+          <select class="field" onchange="draft.lines[${i}].color=this.value; renderOrder()">
+            ${d.colors.map(c => `<option ${c.name===ln.color?"selected":""}>${c.name}</option>`).join("")}
+          </select>
+          <select class="field" onchange="draft.lines[${i}].size=this.value; renderOrder()">
+            ${SIZES.map(s => `<option ${s===ln.size?"selected":""}>${s}</option>`).join("")}
+          </select>
+          <input class="field" type="number" min="1" value="${ln.qty}" onchange="draft.lines[${i}].qty=+this.value; renderOrder()" />
+          <span class="tag ${over?"warn":""}">${over ? "Only "+av+" ready" : av+" ready"}</span>
+        </div>`;
+      }).join("");
+      const amount = draft.lines.reduce((n, ln) => n + ln.qty * designs.find(x => x.id === ln.designId).rate, 0);
+      const blocked = draft.lines.some(ln => ln.qty > available(ln.designId, ln.color, ln.size));
+      document.getElementById("orderSheet").innerHTML = `
+        <div class="sheet-head">
+          <div>
+            <h2 class="display" style="font-size:28px">Take order</h2>
+            <p class="lede">Bound to the same Design Card the customer just received.</p>
+          </div>
+          <button class="btn btn-ghost" onclick="closeSheets()">Close</button>
+        </div>
+        <label>Customer</label>
+        <select class="field" style="width:100%;margin:6px 0 12px" onchange="draft.customerId=this.value; renderOrder()">
+          ${customers.map(c => `<option value="${c.id}" ${c.id===draft.customerId?"selected":""}>${c.name} · ${c.city}</option>`).join("")}
+        </select>
+        <div class="order-lines">${rows}</div>
+        <div class="cta-row">
+          <button class="btn btn-ghost" onclick="const d=designs[0]; draft.lines.push({designId:d.id,color:d.colors[0].name,size:'M',qty:12}); renderOrder()">Add line</button>
+        </div>
+        <p><b>Estimate ₹${amount.toLocaleString("en-IN")}</b> · ${cust.name}</p>
+        <div class="cta-row">
+          <button class="btn btn-ok" ${blocked?"disabled style='opacity:.5'":""} onclick="placeOrder()">Confirm & reserve stock</button>
+        </div>`;
+    }
+    function placeOrder() {
+      const cust = customers.find(c => c.id === draft.customerId);
+      for (const ln of draft.lines) {
+        if (ln.qty > available(ln.designId, ln.color, ln.size)) return toast("Fix quantities against stock");
+      }
+      for (const ln of draft.lines) {
+        const d = designs.find(x => x.id === ln.designId);
+        d.colors.find(c => c.name === ln.color).stock[ln.size] -= ln.qty;
+      }
+      const no = "TG-ORD-" + (1040 + orders.length + 1);
+      orders.unshift({
+        no, at: new Date().toISOString(), customer: cust.name, city: cust.city,
+        lines: draft.lines.map(ln => ({...ln, name: designs.find(x=>x.id===ln.designId).name})),
+        status: "Reserved"
+      });
+      localStorage.setItem("tg-orders", JSON.stringify(orders));
+      closeSheets();
+      showView("orders");
+      toast("Order " + no + " reserved");
+    }
+    function renderOrders() {
+      const el = document.getElementById("orders");
+      if (!orders.length) {
+        el.innerHTML = `<article class="panel" style="padding:18px"><p class="lede" style="margin:0">No orders yet. Open a design from Catalog and tap Add to order — the same card you would have just shared with the customer.</p></article>`;
+        return;
+      }
+      el.innerHTML = orders.map(o => `
+        <article class="order">
+          <div>
+            <div class="code">${o.no} · ${new Date(o.at).toLocaleString()}</div>
+            <h3 style="margin:4px 0">${o.customer} · ${o.city}</h3>
+            <div class="lede" style="margin:0">${o.lines.map(l => `${l.designId} ${l.name} · ${l.color}/${l.size} × ${l.qty}`).join(" · ")}</div>
+          </div>
+          <span class="tag">${o.status}</span>
+        </article>`).join("");
+    }
+
+    function renderCapture() {
+      const sel = document.getElementById("captureDesign");
+      const current = sel.value || designs[0].id;
+      sel.innerHTML = designs.map(d => `<option value="${d.id}">${d.id} · ${d.name}</option>`).join("");
+      sel.value = current;
+      syncViewfinder();
+    }
+    function syncViewfinder() {
+      const d = designs.find(x => x.id === document.getElementById("captureDesign").value);
+      document.getElementById("captureColor").innerHTML = d.colors.map(c => `<option>${c.name}</option>`).join("");
+      document.getElementById("viewfinder").style.cssText += ";" + swatchStyle({motif:d.motif, palette:d.colors.map(c=>c.hex)});
+      document.getElementById("capHint").textContent = `${d.images.length} shots on ${d.id}. These replace the old tablet folder.`;
+      document.getElementById("capShots").innerHTML = d.images.map(img =>
+        `<div class="swatch" style="${img.src ? `background:url('${img.src}') center/cover` : swatchStyle(img)}" title="${img.view} · ${img.color}"></div>`
+      ).join("");
+    }
+    function captureShot() {
+      const d = designs.find(x => x.id === document.getElementById("captureDesign").value);
+      const color = document.getElementById("captureColor").value;
+      const viewName = document.getElementById("captureView").value;
+      const col = d.colors.find(c => c.name === color) || d.colors[0];
+      d.images.unshift({
+        id: d.id + "-n" + Date.now(),
+        view: viewName,
+        color,
+        motif: d.motif,
+        palette: [col.hex, d.colors[0].hex]
+      });
+      toast("Shot saved to " + d.id + " · " + viewName + " · " + color);
+      syncViewfinder();
+    }
+    function captureFile(ev) {
+      const file = ev.target.files[0]; if (!file) return;
+      const d = designs.find(x => x.id === document.getElementById("captureDesign").value);
+      d.images.unshift({
+        id: d.id + "-f" + Date.now(),
+        view: document.getElementById("captureView").value,
+        color: document.getElementById("captureColor").value,
+        src: URL.createObjectURL(file),
+        motif: d.motif,
+        palette: d.colors.map(c => c.hex)
+      });
+      toast("Photo attached to " + d.id);
+      syncViewfinder();
+      ev.target.value = "";
+    }
+
+    renderCatalog();
+  </script>
+</body>
+</html>
